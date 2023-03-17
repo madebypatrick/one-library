@@ -97,6 +97,40 @@ app.get('/users/:uuid',async(req,res)=>{
     }
 })
 
+// Delete an owner
+app.delete('/users/:uuid',async(req,res)=>{
+    const uuid = req.params.uuid
+
+    try{
+        const owner=await Owner.findOne({ where:{uuid} })
+        await owner.destroy()
+        return res.json({message:"Owner deleted!"})
+    }catch(error){
+        console.log(error)
+        return res.status(500).json({
+            error:'Server error'
+        })
+    }
+})
+// Update an owner
+app.put('/users/:uuid',async(req,res)=>{
+    const uuid = req.params.uuid
+    const {fullname,email}=req.body
+
+    try{
+        const owner=await Owner.findOne({where:{uuid}})
+        owner.fullname=fullname
+        owner.email=email
+
+        await owner.save()
+        return res.json(owner)
+    }catch(error){
+        console.log(error)
+        return res.status(500).json({
+            error:'Server error'
+        })
+    }
+})
 
 // get all the books based and the Owners
 app.get('/books',async(req,res)=>{
