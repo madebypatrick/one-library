@@ -79,8 +79,8 @@ app.get('/users',async(req,res)=>{
     }
 })
 
-// Get one  owner
-app.get('/users/:uuid',async(req,res)=>{
+// Get books based on its owner
+app.get('/book/:uuid',async(req,res)=>{
     const uuid = req.params.uuid
 
     try{
@@ -132,7 +132,7 @@ app.put('/users/:uuid',async(req,res)=>{
     }
 })
 
-// get all the books based and the Owners
+// get all the books based and their the Owners
 app.get('/books',async(req,res)=>{
     try{
         const books=await Book.findAll({include:['owner']})
@@ -157,6 +157,6 @@ HOST= process.env.HOST;
 app.listen(PORT,async()=>{
     console.log(`server started on: http://${HOST}:${PORT}`)
     await sequelize.authenticate()
-    console.log(`Database connected...`)
+    console.log(`Database is connected successfully...`)
 
 })
